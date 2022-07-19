@@ -46,10 +46,12 @@ public class Drawer extends Canvas
    * @param _point ファジィ点
    * @param _color 色
    */
-  public void drawArc(FuzzyPoint _point, Color _color) {
+  public void drawArc(Point _point, Color _color) {
     Graphics g = this.getGraphics();
     g.setColor(_color);
-    g.drawOval((int) (_point.getX() - _point.getR()), (int) (_point.getY() - _point.getR()), (int) (2 * _point.getR()), (int) (2 * _point.getR()));
+    Graphics2D g2 = (Graphics2D) g;
+    g2.setStroke(new BasicStroke(1.5f));
+    g.drawOval((int) (_point.getX() - _point.getF()), (int) (_point.getY() - _point.getF()), (int) (2 * _point.getF()), (int) (2 * _point.getF()));
   }
 
   /**
@@ -59,6 +61,10 @@ public class Drawer extends Canvas
    */
   @Override
   public void mouseClicked(MouseEvent e) {
+    int button = e.getButton();
+    if (button == MouseEvent.BUTTON3) {
+      clearCanvas();
+    }
   }
 
   /**
@@ -68,8 +74,11 @@ public class Drawer extends Canvas
    */
   @Override
   public void mousePressed(MouseEvent e) {
-    m_centerPoint = new Point2D.Double(e.getX(), e.getY());
-    drawPoint(m_centerPoint, Color.ORANGE);
+    int button = e.getButton();
+    if (button == MouseEvent.BUTTON1) {
+      m_centerPoint = new Point2D.Double(e.getX(), e.getY());
+      drawPoint(m_centerPoint, Color.ORANGE);
+    }
   }
 
   /**
@@ -97,9 +106,12 @@ public class Drawer extends Canvas
    */
   @Override
   public void mouseReleased(MouseEvent e) {
-    Point2D.Double arcPoint = new Point2D.Double(e.getX(), e.getY());
-    FuzzyPoint point = FuzzyPoint.create(m_centerPoint.getX(), m_centerPoint.getY(),m_centerPoint.distance(arcPoint));
-    drawArc(point, Color.BLACK);
+    int button = e.getButton();
+    if (button == MouseEvent.BUTTON1) {
+      Point2D.Double arcPoint = new Point2D.Double(e.getX(), e.getY());
+      Point point = Point.create(m_centerPoint.getX(), m_centerPoint.getY(), m_centerPoint.distance(arcPoint));
+      drawArc(point, Color.BLACK);
+    }
   }
 
   /**
