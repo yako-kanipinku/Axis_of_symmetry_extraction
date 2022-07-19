@@ -38,8 +38,7 @@ public class FuzzyPoint {
 	 * @return
 	 */
 	public FuzzyPoint midPoint(FuzzyPoint _p){
-		return FuzzyPoint.create(Math.abs((_p.getX() - m_x)/2),Math.abs((_p.getY() - m_y)/2), m_r);
-		// とりあえずm_rで返してます.
+		return FuzzyPoint.create(Math.abs((_p.getX() - m_x)/2),Math.abs((_p.getY() - m_y)/2), Math.abs((_p.getR() - m_r)/2));
 	}
 
 	/**
