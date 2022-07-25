@@ -20,13 +20,22 @@ public class Main extends JFrame{
    */
   private Main() {
     setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-    setSize(900, 700);
-    Drawer canvas = new Drawer();
-    canvas.setSize(800, 600);
-    canvas.setBackground(Color.WHITE);
+    MyCanvas myCanvas = MyCanvas.create(CANVAS_SIZE_X, CANVAS_SIZE_Y);
+    myCanvas.setBackground(Color.WHITE);
+    JPanel panel = new JPanel();
+    panel.add(myCanvas);
+    getContentPane().add(panel);
     setTitle("Line Symmetry");
-    add(canvas);
     pack();
     setVisible( true );
   }
+
+  /**
+   * キャンバスサイズ(X軸方向)
+   */
+  public static final int CANVAS_SIZE_X = 800;
+  /**
+   * キャンバスサイズ(Y軸方向)
+   */
+  public static final int CANVAS_SIZE_Y = 600;
 }
