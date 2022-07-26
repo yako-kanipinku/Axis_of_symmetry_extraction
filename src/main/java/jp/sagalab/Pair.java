@@ -13,13 +13,23 @@ public class Pair {
 
   public double calculateRadian() {
     double radian = Math.atan2(m_point1.getY() - m_point2.getY(), m_point1.getX() - m_point2.getX());
-    return Calculate.normalizeAngle(radian);
+    return normalizeAngle(radian);
+  }
+
+  public static double normalizeAngle(double _angle) {
+    if (_angle > Math.PI) {
+      return _angle - Math.PI;
+    } else if (_angle < 0) {
+      return _angle + Math.PI;
+    } else {
+      return _angle;
+    }
   }
 
   public Point getCenterPoint() {
-    double cpX = (m_point1.getX() - m_point2.getX()) / 2;
-    double cpY = (m_point1.getY() - m_point2.getY()) / 2;
-    double cpF = (m_point1.getF() - m_point2.getF()) / 2;
+    double cpX = (m_point1.getX() + m_point2.getX()) / 2;
+    double cpY = (m_point1.getY() + m_point2.getY()) / 2;
+    double cpF = (m_point1.getF() + m_point2.getF()) / 2;
     return Point.createXYF(cpX, cpY, cpF);
   }
 

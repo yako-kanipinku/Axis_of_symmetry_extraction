@@ -5,15 +5,7 @@ public class HoughPlane {
     return new HoughPlane();
   }
 
-  public static int getNumOfDivisionPixels() {
-    return NUM_OF_DIVISION_PIXELS;
-  }
-
-  public static int getNumOfDivisionAngles() {
-    return NUM_OF_DIVISION_ANGLES;
-  }
-
-  public double[][] getHoughPlane() {
+  public double[][] getHoughPlaneArray() {
     return m_houghPlane;
   }
 
@@ -26,7 +18,7 @@ public class HoughPlane {
   }
 
   private double[][] generateHoughPlane() {
-    double[][] houghPlane = new double[NUM_OF_DIVISION_ANGLES][NUM_OF_DIVISION_PIXELS * 2];
+    double[][] houghPlane = new double[NUM_OF_DIVISION_ANGLES][NUM_OF_DIVISION_PIXELS * 2 + 1];
     for (int i = 0; i < NUM_OF_DIVISION_ANGLES; i++) {
       for (int j = 0; j < NUM_OF_DIVISION_PIXELS; j++) {
          houghPlane[i][j] = 0.0;
@@ -40,9 +32,9 @@ public class HoughPlane {
   }
 
   /** ハフ平面におけるρの分割数 (N_ρ) */
-  private static final int NUM_OF_DIVISION_PIXELS = 800;
+  public static final int NUM_OF_DIVISION_PIXELS = 800;
   /** ハフ平面におけるθの分割数 (N_θ) */
-  private static final int NUM_OF_DIVISION_ANGLES = 360;
+  public static final int NUM_OF_DIVISION_ANGLES = 360;
   /** ハフ平面 */
   private final double[][] m_houghPlane;
 }

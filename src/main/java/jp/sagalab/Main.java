@@ -1,7 +1,6 @@
 package jp.sagalab;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * ウィンドウを出力するクラス
@@ -21,7 +20,6 @@ public class Main extends JFrame{
   private Main() {
     setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
     MyCanvas myCanvas = MyCanvas.create(CANVAS_SIZE_X, CANVAS_SIZE_Y);
-    myCanvas.setBackground(Color.WHITE);
     JPanel panel = new JPanel();
     panel.add(myCanvas);
     getContentPane().add(panel);
