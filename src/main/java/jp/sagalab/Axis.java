@@ -8,6 +8,11 @@ public class Axis {
 
 	// 角度と距離を求める. (角度のメンバシップ関数を返すメソッドと距離のメンバシップ関数を返すメソッド)
 
+	public Double getGradeOfDistance(){
+
+		return
+	}
+
 	public Axis(double _distance, double _degree){
 		m_distance = _distance;
 		m_degree = _degree;
