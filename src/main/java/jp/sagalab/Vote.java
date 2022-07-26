@@ -6,8 +6,8 @@ public class Vote {
   final private FuzzyPoint m_point1;
   final private FuzzyPoint m_point2;
 
-  final private int NUM_OF_DIVISION_RHO = 100;
-  final private int NUM_OF_DIVISION_THETA = 60;
+  final private int NUM_OF_DIVISION_RHO = 1600;
+  final private int NUM_OF_DIVISION_THETA = 360;
 
   public Vote(FuzzyPoint _p1, FuzzyPoint _p2){
     m_point1 = _p1;
@@ -26,7 +26,7 @@ public class Vote {
     Pair p = Pair.create(m_point1,m_point2);
 
     for(int i=0; i<NUM_OF_DIVISION_THETA; i++){
-      for(int j=0; j<NUM_OF_DIVISION_RHO; j++){
+      for(int j=-NUM_OF_DIVISION_RHO; j<NUM_OF_DIVISION_RHO; j++){
         vote[i][j] = Math.min(p.getGradeOfAngle3(i),p.getGradeOfDistance(i,j));
       }
     }

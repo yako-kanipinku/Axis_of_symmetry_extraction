@@ -102,7 +102,7 @@ public class Main extends JFrame{
 	private List<Point> m_points = new ArrayList<>();
 	private List<FuzzyPoint> m_fuzzyPoints = new ArrayList<>();
 	private final int CANVAS_SIZE_X = 800;
-	private final int CANVAS_SIZE_Y = 600;
+	private final int CANVAS_SIZE_Y = 800;
 	private final Canvas canvas = new Canvas();
 
 	public static void main(String[] args) {
