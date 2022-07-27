@@ -9,6 +9,16 @@ public final class Point {
    * 指定した座標にある点を生成する.
    * @param _x x座標
    * @param _y y座標
+   * @return 点のインスタンス
+   */
+  static Point createXY(Double _x, Double _y) {
+    return new Point(_x, _y, 0.0);
+  }
+
+  /**
+   * 指定した座標にある点を生成する.
+   * @param _x x座標
+   * @param _y y座標
    * @param _f ファジネスの値
    * @return 点のインスタンス
    */
