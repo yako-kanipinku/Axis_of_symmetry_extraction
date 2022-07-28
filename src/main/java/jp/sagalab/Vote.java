@@ -6,8 +6,10 @@ public class Vote {
   final private FuzzyPoint m_point1;
   final private FuzzyPoint m_point2;
 
-  final private int NUM_OF_DIVISION_RHO = 100;
-  final private int NUM_OF_DIVISION_THETA = 60;
+  private int NUM_OF_DIVISION_RHO = 160;
+  private int NUM_OF_DIVISION_THETA = 36;
+
+  final private double R = Math.sqrt(Math.pow(800,2) + Math.pow(800,2));
 
   public Vote(FuzzyPoint _p1, FuzzyPoint _p2){
     m_point1 = _p1;
@@ -26,8 +28,8 @@ public class Vote {
     Pair p = Pair.create(m_point1,m_point2);
 
     for(int i=0; i<NUM_OF_DIVISION_THETA; i++){
-      for(int j=0; j<NUM_OF_DIVISION_RHO; j++){
-        vote[i][j] = Math.min(p.getGradeOfAngle3(i),p.getGradeOfDistance(i,j));
+      for(int j= -NUM_OF_DIVISION_RHO/2; j<NUM_OF_DIVISION_RHO/2; j++){
+        vote[i][j + NUM_OF_DIVISION_RHO/2] = Math.min(p.getGradeOfAngle3(i * 2 * Math.PI / NUM_OF_DIVISION_THETA),p.getGradeOfDistance(i * 2 * Math.PI / NUM_OF_DIVISION_THETA,j * R / NUM_OF_DIVISION_RHO));
       }
     }
     return vote;
@@ -44,9 +46,9 @@ public class Vote {
     List<Axis> axis = new ArrayList<>();
 
     for(int i=0; i<NUM_OF_DIVISION_THETA; i++){
-      for(int j=0; j<NUM_OF_DIVISION_RHO; j++){
-        if(getGrade(i,j) > 0)
-          axis.add(Axis.create(i,j,getGrade(i,j)));
+      for(int j=-NUM_OF_DIVISION_RHO/2; j<NUM_OF_DIVISION_RHO/2; j++){
+        if(getGrade(i ,j + NUM_OF_DIVISION_RHO/2.0) > 0)
+          axis.add(Axis.create(j * R / NUM_OF_DIVISION_RHO,i * 2 * Math.PI / NUM_OF_DIVISION_THETA,getGrade(i,j + NUM_OF_DIVISION_RHO/2)));
       }
     }
     return axis;

@@ -67,7 +67,7 @@ public class Pair {
     grade = Math.max(grade1, grade2);
     grade = Math.max(grade, grade3);
 
-    if (grade > 0) {
+    if (grade < 0) {
       return 0;
     } else {
       return grade;
