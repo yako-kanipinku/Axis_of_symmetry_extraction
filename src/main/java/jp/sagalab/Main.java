@@ -86,7 +86,10 @@ public class Main extends JFrame{
 								System.out.println(" b出てる.");
 								Axis c = a.getMostSymmetricAxis(b);
 								System.out.println(" c出てる.");
+								System.out.println("distance:"+c.getDistance()+", degree:"+Math.toDegrees(c.getDegree()));
 								drawAxis(c, Color.GREEN);
+								System.out.println("MostAxis描画完了");
+
 
 							}
 						}

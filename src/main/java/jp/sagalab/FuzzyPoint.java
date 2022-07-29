@@ -60,13 +60,23 @@ public class FuzzyPoint {
 	 */
 	public double getRadian(FuzzyPoint _p){
 		double radian = Math.atan2(_p.getY() - m_y, _p.getX() - m_x);
-		return radian;
+		return normalizeAngle(radian);
 	}
 
 	private FuzzyPoint(Double _x, Double _y, Double _r){
 		m_x = _x;
 		m_y = _y;
 		m_r = _r;
+	}
+
+	private double normalizeAngle(double _theta){
+		if(_theta > Math.PI){
+			return _theta + Math.PI;
+		}else if(_theta < 0){
+			return _theta - Math.PI;
+		}else{
+			return _theta;
+		}
 	}
 
 	private final Double m_x;
