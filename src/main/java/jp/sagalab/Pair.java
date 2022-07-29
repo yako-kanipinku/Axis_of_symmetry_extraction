@@ -22,7 +22,7 @@ public class Pair {
     double grade,left,right;
     FuzzyPoint m = m_point1.midPoint(m_point2);
 
-    left = (1 / m.getR() * _rho) + 1 + (-1 * (m.getX() * Math.cos(_theta) + m.getY() * Math.sin(_theta)) / m.getR());
+    left = (1 / m.getR() * _rho) + 1 - 1 * ((m.getX() * Math.cos(_theta) + m.getY() * Math.sin(_theta)) / m.getR());
     right = (-1 / m.getR() * _rho) + 1 + ((m.getX() * Math.cos(_theta) + m.getY() * Math.sin(_theta)) / m.getR());
 
 
@@ -46,8 +46,8 @@ public class Pair {
   public double getGradeOfAngle(double _theta){
     double left,right;
 
-    left = 2 * m_point1.getL(m_point2) / Math.PI * (m_point1.getR() + m_point2.getR()) * _theta + Math.PI * (m_point1.getR() + m_point2.getR()) - 2 * m_point1.getL(m_point2) * m_point1.getRadian(m_point2) / Math.PI * (m_point1.getR() + m_point2.getR());
-    right = -2 * m_point1.getL(m_point2) / Math.PI * (m_point1.getR() + m_point2.getR()) * _theta + Math.PI * (m_point1.getR() + m_point2.getR()) + 2 * m_point1.getL(m_point2) * m_point1.getRadian(m_point2) / Math.PI * (m_point1.getR() + m_point2.getR());
+    left = 2 * m_point1.getL(m_point2) / Math.PI * (m_point1.getR() + m_point2.getR()) * _theta + (Math.PI * (m_point1.getR() + m_point2.getR()) - 2 * m_point1.getL(m_point2) * m_point1.getRadian(m_point2)) / Math.PI * (m_point1.getR() + m_point2.getR());
+    right = -2 * m_point1.getL(m_point2) / Math.PI * (m_point1.getR() + m_point2.getR()) * _theta + (Math.PI * (m_point1.getR() + m_point2.getR()) + 2 * m_point1.getL(m_point2) * m_point1.getRadian(m_point2)) / Math.PI * (m_point1.getR() + m_point2.getR());
 
     return Math.min(left,right);
 

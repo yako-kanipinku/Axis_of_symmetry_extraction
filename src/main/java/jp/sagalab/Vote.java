@@ -6,8 +6,8 @@ public class Vote {
   final private FuzzyPoint m_point1;
   final private FuzzyPoint m_point2;
 
-  private int NUM_OF_DIVISION_RHO = 160;
-  private int NUM_OF_DIVISION_THETA = 36;
+  private final int NUM_OF_DIVISION_RHO = 160;
+  private final int NUM_OF_DIVISION_THETA = 36;
 
   final private double R = Math.sqrt(Math.pow(800,2) + Math.pow(800,2));
 
@@ -36,9 +36,9 @@ public class Vote {
   }
 
 	// その地点の投票結果を返すメソッド. (グレードで返す)
-  public double getGrade(double _theta, double _rho){
+  public double getGrade(int _thetaNum, int _rhoNum){
     double[][] vote = voteGrade();
-    return vote[(int)_theta][(int)_rho];
+    return vote[_thetaNum][_rhoNum];
   }
 
 	// グレード0以上の軸を返すメソッド. (リストで返す)
@@ -47,7 +47,7 @@ public class Vote {
 
     for(int i=0; i<NUM_OF_DIVISION_THETA; i++){
       for(int j=-NUM_OF_DIVISION_RHO/2; j<NUM_OF_DIVISION_RHO/2; j++){
-        if(getGrade(i ,j + NUM_OF_DIVISION_RHO/2.0) > 0)
+        if(getGrade(i ,j + NUM_OF_DIVISION_RHO/2) > 0)
           axis.add(Axis.create(j * R / NUM_OF_DIVISION_RHO,i * 2 * Math.PI / NUM_OF_DIVISION_THETA,getGrade(i,j + NUM_OF_DIVISION_RHO/2)));
       }
     }
