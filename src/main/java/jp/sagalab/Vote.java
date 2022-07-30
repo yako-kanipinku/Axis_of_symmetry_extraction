@@ -6,8 +6,8 @@ public class Vote {
   final private FuzzyPoint m_point1;
   final private FuzzyPoint m_point2;
 
-  private final int NUM_OF_DIVISION_RHO = 160;
-  private final int NUM_OF_DIVISION_THETA = 36;
+  private final int NUM_OF_DIVISION_RHO = 1600;
+  private final int NUM_OF_DIVISION_THETA = 360;
 
   final private double R = Math.sqrt(Math.pow(800,2) + Math.pow(800,2));
 
@@ -30,7 +30,7 @@ public class Vote {
     for(int i=0; i<NUM_OF_DIVISION_THETA; i++){
 
       for(int j= -NUM_OF_DIVISION_RHO/2; j<NUM_OF_DIVISION_RHO/2; j++){
-        vote[i][j + NUM_OF_DIVISION_RHO/2] = Math.min(p.getGradeOfAngle3(i * 2 * Math.PI / NUM_OF_DIVISION_THETA),p.getGradeOfDistance(i * 2 * Math.PI / NUM_OF_DIVISION_THETA,j * R / NUM_OF_DIVISION_RHO));
+        vote[i][j + NUM_OF_DIVISION_RHO/2] = Math.min(p.getGradeOfAngle3(i * 2 * Math.PI / NUM_OF_DIVISION_THETA),p.getGradeOfDistance(i * 2 * Math.PI / NUM_OF_DIVISION_THETA,j * R / (NUM_OF_DIVISION_RHO/2.0)));
       }
     }
     return vote;
@@ -45,11 +45,15 @@ public class Vote {
 	// グレード0以上の軸を返すメソッド. (リストで返す)
   public List<Axis> getSymmetricAxis(){
     List<Axis> axis = new ArrayList<>();
+    double grade;
+    double[][] vote = voteGrade();
 
     for(int i=0; i<NUM_OF_DIVISION_THETA; i++){
       for(int j=-NUM_OF_DIVISION_RHO/2; j<NUM_OF_DIVISION_RHO/2; j++){
-        if(getGrade(i ,j + NUM_OF_DIVISION_RHO/2) > 0)
-          axis.add(Axis.create(j * R / NUM_OF_DIVISION_RHO,i * 2 * Math.PI / NUM_OF_DIVISION_THETA,getGrade(i,j + NUM_OF_DIVISION_RHO/2)));
+        grade = vote[i][j + NUM_OF_DIVISION_RHO/2];
+        if(grade > 0){
+          axis.add(Axis.create(j * R / (NUM_OF_DIVISION_RHO/2.0),i * 2 * Math.PI / NUM_OF_DIVISION_THETA,grade));
+        }
       }
     }
     return axis;

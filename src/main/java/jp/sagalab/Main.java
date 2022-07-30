@@ -51,6 +51,23 @@ public class Main extends JFrame{
 		g.drawLine((int)x1,0,(int)x2,CANVAS_SIZE_Y);
 	}
 
+//	@Override
+//	public void paint(Graphics g) {
+//		super.paint(g);
+//
+//		if(b.size() != 0) {
+//			for (int i = 0; i < b.size(); i++) {
+//				Color green = new Color(Color.GREEN.getRed(), Color.GREEN.getGreen(), Color.GREEN.getBlue(), (int) b.get(i).getGrade() * 255);
+//				drawAxis(b.get(i), green);
+//			}
+//
+//			System.out.println("Axis描画完了");
+//		}
+//
+//	}
+
+
+
 	public Main() {
 		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		setDefaultCloseOperation( JFrame.DO_NOTHING_ON_CLOSE );
@@ -63,6 +80,8 @@ public class Main extends JFrame{
 		add(canvas);
 		pack();
 		setVisible( true );
+
+
 
 		canvas.addMouseListener(
 				new MouseAdapter() {
@@ -79,16 +98,17 @@ public class Main extends JFrame{
 							m_points.clear();
 
 							if(m_fuzzyPoints.size() == 2){
-								System.out.println("if文内ではある.");
+
 								Vote a = Vote.create(m_fuzzyPoints.get(0), m_fuzzyPoints.get(1));
-								System.out.println(" a出てる.");
-								List<Axis> b = a.getSymmetricAxis();
-								System.out.println(" b出てる.");
+								b = a.getSymmetricAxis();
 								Axis c = a.getMostSymmetricAxis(b);
-								System.out.println(" c出てる.");
+
 								System.out.println("distance:"+c.getDistance()+", degree:"+Math.toDegrees(c.getDegree()));
-								drawAxis(c, Color.GREEN);
-								System.out.println("MostAxis描画完了");
+								drawAxis(c, Color.RED);
+								System.out.println(b.size());
+
+//								repaint();
+
 
 
 							}
@@ -101,11 +121,13 @@ public class Main extends JFrame{
 	}
 
 
+	List<Axis> b;
 	private int m_counter = 0;
 	private List<Point> m_points = new ArrayList<>();
 	private List<FuzzyPoint> m_fuzzyPoints = new ArrayList<>();
 	private final int CANVAS_SIZE_X = 800;
 	private final int CANVAS_SIZE_Y = 800;
+//	private final JPanel canvas = new JPanel();
 	private final Canvas canvas = new Canvas();
 
 	public static void main(String[] args) {

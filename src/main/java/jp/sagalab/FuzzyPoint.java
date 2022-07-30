@@ -38,7 +38,7 @@ public class FuzzyPoint {
 	 * @return
 	 */
 	public FuzzyPoint midPoint(FuzzyPoint _p){
-		return FuzzyPoint.create(Math.abs((_p.getX() - m_x)/2), Math.abs((_p.getY() - m_y)/2), Math.abs((_p.getR() - m_r)/2));
+		return FuzzyPoint.create((_p.getX() +  m_x)/2, (_p.getY() + m_y)/2, (_p.getR() + m_r)/2);
 	}
 
 	/**
@@ -71,9 +71,9 @@ public class FuzzyPoint {
 
 	private double normalizeAngle(double _theta){
 		if(_theta > Math.PI){
-			return _theta + Math.PI;
-		}else if(_theta < 0){
 			return _theta - Math.PI;
+		}else if(_theta < 0){
+			return _theta + Math.PI;
 		}else{
 			return _theta;
 		}

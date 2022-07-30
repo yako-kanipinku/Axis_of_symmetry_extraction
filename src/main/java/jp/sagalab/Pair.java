@@ -46,8 +46,8 @@ public class Pair {
   public double getGradeOfAngle(double _theta){
     double left,right;
 
-    left = 2 * m_point1.getL(m_point2) / Math.PI * (m_point1.getR() + m_point2.getR()) * _theta + (Math.PI * (m_point1.getR() + m_point2.getR()) - 2 * m_point1.getL(m_point2) * m_point1.getRadian(m_point2)) / Math.PI * (m_point1.getR() + m_point2.getR());
-    right = -2 * m_point1.getL(m_point2) / Math.PI * (m_point1.getR() + m_point2.getR()) * _theta + (Math.PI * (m_point1.getR() + m_point2.getR()) + 2 * m_point1.getL(m_point2) * m_point1.getRadian(m_point2)) / Math.PI * (m_point1.getR() + m_point2.getR());
+    left = 2 * m_point1.getL(m_point2) / (Math.PI * (m_point1.getR() + m_point2.getR())) * _theta + (Math.PI * (m_point1.getR() + m_point2.getR()) - 2 * m_point1.getL(m_point2) * m_point1.getRadian(m_point2)) / (Math.PI * (m_point1.getR() + m_point2.getR()));
+    right = -2 * m_point1.getL(m_point2) / (Math.PI * (m_point1.getR() + m_point2.getR())) * _theta + (Math.PI * (m_point1.getR() + m_point2.getR()) + 2 * m_point1.getL(m_point2) * m_point1.getRadian(m_point2)) / (Math.PI * (m_point1.getR() + m_point2.getR()));
 
     return Math.min(left,right);
 
