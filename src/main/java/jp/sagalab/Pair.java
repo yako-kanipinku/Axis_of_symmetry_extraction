@@ -1,91 +1,96 @@
 package jp.sagalab;
 
-/**
- * ファジィ点のペア
- */
 public class Pair {
 
-  /**
-   * インスタンス生成を行う.
-   * @param _point1 ファジィ点1
-   * @param _point2 ファジィ点2
-   * @return ファジィ点ペアのインスタンス
-   */
-  public static Pair create(Point _point1, Point _point2) {
-    return new Pair(_point1, _point2);
+  final private FuzzyPoint m_point1;
+  final private FuzzyPoint m_point2;
+
+  public Pair(FuzzyPoint _p1, FuzzyPoint _p2){
+    m_point1 = _p1;
+    m_point2 = _p2;
+  }
+
+  public static Pair create(FuzzyPoint _p1, FuzzyPoint _p2){
+    return new Pair(_p1,_p2);
   }
 
   /**
-   * ファジィ点ペアの距離を算出する.
-   * @return ファジィ点ペアの距離
+   * θ,ρ地点での対象軸の距離のグレードを返す.
+   * @return grade
    */
-  public double calculateDistance() {
-    return Point.getDistance(m_point1, m_point2);
-  }
+  public double getGradeOfDistance(double _theta, double _rho){
+    double grade,left,right;
+    FuzzyPoint m = m_point1.midPoint(m_point2);
 
-  /**
-   * ファジィ点ペアをつないだ直線とx軸とのなす角を算出する.
-   * @return 2点を結んだ直線ろx軸とのなす角の大きさ(単位:radian)
-   */
-  public double calculateRadian() {
-    double radian = Math.atan2(m_point1.getY() - m_point2.getY(), m_point1.getX() - m_point2.getX());
-    return normalizeAngle(radian);
-  }
+    left = (1 / m.getR() * _rho) + 1 - 1 * ((m.getX() * Math.cos(_theta) + m.getY() * Math.sin(_theta)) / m.getR());
+    right = (-1 / m.getR() * _rho) + 1 + ((m.getX() * Math.cos(_theta) + m.getY() * Math.sin(_theta)) / m.getR());
 
-  /**
-   * 角度の正規化(0≦_angle＜πへと変換)を行う.
-   * @param _angle 角度
-   * @return 正規化後の角度
-   */
-  public static double normalizeAngle(double _angle) {
-    if (_angle > Math.PI) {
-      return _angle - Math.PI;
-    } else if (_angle < 0) {
-      return _angle + Math.PI;
+
+    if (left > right) {
+      grade = right;
     } else {
-      return _angle;
+      grade = left;
+    }
+
+    if(grade < 0){
+      return 0;
+    }
+    return grade;
+  }
+
+  /**
+   * θ,ρ地点での対象軸の角度のグレードを返す.
+   * @param _theta
+   * @return
+   */
+  public double getGradeOfAngle(double _theta){
+    double left,right;
+
+    left = 2 * m_point1.getL(m_point2) / (Math.PI * (m_point1.getR() + m_point2.getR())) * _theta + (Math.PI * (m_point1.getR() + m_point2.getR()) - 2 * m_point1.getL(m_point2) * m_point1.getRadian(m_point2)) / (Math.PI * (m_point1.getR() + m_point2.getR()));
+    right = -2 * m_point1.getL(m_point2) / (Math.PI * (m_point1.getR() + m_point2.getR())) * _theta + (Math.PI * (m_point1.getR() + m_point2.getR()) + 2 * m_point1.getL(m_point2) * m_point1.getRadian(m_point2)) / (Math.PI * (m_point1.getR() + m_point2.getR()));
+
+    return Math.min(left,right);
+
+  }
+
+  /**
+   * θ,ρ地点での対象軸の角度のグレードを,π平行移動したものとの論理和を取ったものを返す.
+   * @param _theta
+   * @return
+   */
+  public double getGradeOfAngle2(double _theta) {
+    double grade1 = getGradeOfAngle(_theta);
+    double grade2 = getGradeOfAngle(_theta - Math.PI);
+    double grade3 = (m_point1.getR() + m_point2.getR() - m_point1.getL(m_point2)) / (m_point1.getR() + m_point2.getR());
+
+    double grade;
+    grade = Math.max(grade1, grade2);
+    grade = Math.max(grade, grade3);
+
+    if (grade < 0) {
+      return 0;
+    } else {
+      return grade;
     }
   }
 
   /**
-   *ファジィ中点を取得する.
-   * @return ファジィ中点
+   * θ,ρ地点での対象軸の角度のグレードを 0 <= θ < 2π の範囲に正規化したものを返す.
+   * @param _theta
+   * @return
    */
-  public Point getCenterPoint() {
-    double cpX = (m_point1.getX() + m_point2.getX()) / 2;
-    double cpY = (m_point1.getY() + m_point2.getY()) / 2;
-    double cpF = (m_point1.getF() + m_point2.getF()) / 2;
-    return Point.createXYF(cpX, cpY, cpF);
+  public double getGradeOfAngle3(double _theta){
+    double grade1 = getGradeOfAngle2(_theta - 2 * Math.PI);
+    double grade2 = getGradeOfAngle2(_theta);
+    double grade3 = getGradeOfAngle2(_theta + 2 * Math.PI);
+
+    double grade;
+    grade = Math.max(grade1, grade2);
+    grade = Math.max(grade, grade3);
+
+    return grade;
   }
 
-  /**
-   * ファジィ点1を取得する.
-   * @return ファジィ点
-   */
-  public Point getP1() {
-    return m_point1;
-  }
 
-  /**
-   * ファジィ点2を取得する.
-   * @return ファジィ点
-   */
-  public Point getP2() {
-    return m_point2;
-  }
 
-  /**
-   * コンストラクタ
-   * @param _point1 ファジィ点1
-   * @param _point2 ファジィ点2
-   */
-  private Pair(Point _point1, Point _point2) {
-    m_point1 = _point1;
-    m_point2 = _point2;
-  }
-
-  /** ファジィ点1 */
-  private final Point m_point1;
-  /** ファジィ点2 */
-  private final Point m_point2;
 }
